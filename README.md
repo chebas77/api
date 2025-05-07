@@ -95,9 +95,6 @@ api/                        # Raíz del proyecto
 │   │   └── serializers.py  # Serializadores para la API REST
 │   ├── templates/          # Plantillas HTML
 │   │   └── myapp/          # Plantillas específicas de la aplicación
-│   ├── static/             # Archivos estáticos
-│   │   ├── css/            # Archivos CSS
-│   │   └── js/             # Archivos JavaScript
 │   └── manage.py           # Script de gestión de Django
 ├── venv/                   # Entorno virtual
 ├── requirements.txt        # Dependencias del proyecto
