@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        :root {
+            --primary-color: #2c7d32;
+            --primary-hover: #1e5e24;
+            --primary-light: #e8f5e9;
+            --secondary-color: #f8f9fa;
+            --text-color: #343a40;
+            --border-color: #e9ecef;
+            --hover-color: #f5f5f5;
+            --danger-color: #dc3545;
+            --danger-hover: #bd2130;
+            --warning-color: #ffc107;
+            --success-color: #28a745;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #1b5e20);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+        
+        header h1 {
+            position: relative;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        main {
+            padding: 2.5rem 0;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: '✏️';
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .section-title.products::before {
+            content: '📋';
+        }
+        
+        form {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-color);
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 125, 50, 0.25);
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 4px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            color: #fff;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-secondary {
+            color: var(--text-color);
+            background-color: #e9ecef;
+            border-color: #e9ecef;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #dde2e6;
+            border-color: #dde2e6;
+        }
+        
+        .btn-danger {
+            color: #fff;
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+            border-color: var(--danger-hover);
+        }
+        
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+        }
+        
+        .btn-action {
+            margin-right: 0.5rem;
+        }
+        
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        table th, table td {
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        table tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        table tr:last-child {
+            border-bottom: none;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+        
+        table tr:hover {
+            background-color: var(--hover-color);
+            transition: background-color 0.2s ease;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .stock {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .stock-high {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .stock-medium {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .stock-low {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .api-section {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .api-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 4px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .api-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .api-link i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .status-indicator {
+            display: none;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            header {
+                padding: 1.5rem 0;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .form-group {
+                min-width: 100%;
+            }
+            
+            .actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            .api-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>{{ title }}</h1>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="card">
+                <h2 class="page-title">{{ message }}</h2>
+                
+                <div id="status-message" class="status-indicator hidden"></div>
+                
+                <h3 class="section-title">Agregar o Editar Producto</h3>
+                
+                <form id="product-form" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" id="product-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Nombre del producto</label>
+                            <input type="text" class="form-control" name="name" id="product-name" placeholder="Ingrese nombre del producto" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-price">Precio</label>
+                            <input type="number" step="0.01" class="form-control" name="price" id="product-price" placeholder="0.00" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-stock">Stock</label>
+                            <input type="number" class="form-control" name="stock" id="product-stock" placeholder="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="button" id="reset-form" class="btn btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                    </div>
+                </form>
+                
+                <h3 class="section-title products">Lista de Productos</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>#{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td class="price">${{ product.price }}</td>
+                            <td>
+                                {% if product.stock > 20 %}
+                                <span class="stock stock-high">{{ product.stock }}</span>
+                                {% elif product.stock > 5 %}
+                                <span class="stock stock-medium">{{ product.stock }}</span>
+                                {% else %}
+                                <span class="stock stock-low">{{ product.stock }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="actions">
+                                <!-- Botón que redirige a la vista de edición -->
+                                <a href="{% url 'edit_product' product.id %}" class="btn btn-secondary btn-sm btn-action tooltip">
+                                    ✏️
+                                    <span class="tooltiptext">Editar</span>
+                                </a>
+                            
+                                <!-- Botón que elimina el producto, con confirmación -->
+                                <a href="{% url 'delete_product' product.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')" class="btn btn-danger btn-sm tooltip">
+                                    🗑️
+                                    <span class="tooltiptext">Eliminar</span>
+                                </a>
+                            </td>
+                            
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <div class="api-section">
+                    <a href="/api/products/" class="api-link">
+                        <i>🔗</i> Acceder a la API REST
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Function to edit a product
+        function editProduct(id, name, price, stock) {
+            document.getElementById('product-id').value = id;
+            document.getElementById('product-name').value = name;
+            document.getElementById('product-price').value = price;
+            document.getElementById('product-stock').value = stock;
+            
+            // Scroll to form
+            document.querySelector('.section-title').scrollIntoView({ behavior: 'smooth' });
+            
+            // Change submit button text
+            document.querySelector('button[type="submit"]').textContent = 'Actualizar Producto';
+        }
+        
+        // Reset form function
+        document.getElementById('reset-form').addEventListener('click', function() {
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+            document.querySelector('button[type="submit"]').textContent = 'Guardar Producto';
+        });
+        
+        // Handle form submission
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            // This is just for demonstration - actual form submission still happens
+            const productId = document.getElementById('product-id').value;
+            
+            // Show success message
+            const statusMessage = document.getElementById('status-message');
+            statusMessage.classList.remove('hidden', 'status-error');
+            statusMessage.classList.add('status-success');
+            statusMessage.textContent = productId ? 
+                'Producto actualizado correctamente.' : 
+                'Nuevo producto agregado correctamente.';
+            
+            // This would normally be handled by the server response
+            setTimeout(() => {
+                statusMessage.classList.add('hidden');
+            }, 3000);
+        });
+        
+        // Apply stock styling on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const stockElements = document.querySelectorAll('td:nth-child(4)');
+            stockElements.forEach(element => {
+                const stockValue = parseInt(element.textContent.trim());
+                if (stockValue > 20) {
+                    element.innerHTML = `<span class="stock stock-high">${stockValue}</span>`;
+                } else if (stockValue > 5) {
+                    element.innerHTML = `<span class="stock stock-medium">${stockValue}</span>`;
+                } else {
+                    element.innerHTML = `<span class="stock stock-low">${stockValue}</span>`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
